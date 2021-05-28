@@ -1,3 +1,25 @@
 {
-    "/assets/css/style.css": "/assets/css/style.css"
+    "/assets/js/app.js": "/assets/js/app.js",
+    "/assets/css/style.css": "/assets/css/style.css",
+    "/assets/views/customers/customers.js": "/assets/views/customers/customers.js",
+    "/assets/views/employees/employees.js": "/assets/views/employees/employees.js",
+    "/assets/views/financial/payments/payments.js": "/assets/views/financial/payments/payments.js",
+    "/assets/views/financial/receipts/receipts.js": "/assets/views/financial/receipts/receipts.js",
+    "/assets/views/suppliers/suppliers.js": "/assets/views/suppliers/suppliers.js",
+    "/assets/jquery/jquery.js": "/assets/jquery/jquery.js",
+    "/assets/datatables/datatables.css": "/assets/datatables/datatables.css",
+    "/assets/datatables/datatables.js": "/assets/datatables/datatables.js",
+    "/assets/bootstrap/bootstrap.js": "/assets/bootstrap/bootstrap.js",
+    "/assets/select2/css/select2.css": "/assets/select2/css/select2.css",
+    "/assets/select2/js/select2.js": "/assets/select2/js/select2.js",
+    "/assets/bootstrap-datepicker/bootstrap-datepicker.css": "/assets/bootstrap-datepicker/bootstrap-datepicker.css",
+    "/assets/bootstrap-datepicker/bootstrap-datepicker.js": "/assets/bootstrap-datepicker/bootstrap-datepicker.js",
+    "/assets/js/waves.js": "/assets/js/waves.js",
+    "/assets/js/sidebarmenu.js": "/assets/js/sidebarmenu.js",
+    "/assets/sticky-kit/sticky-kit.js": "/assets/sticky-kit/sticky-kit.js",
+    "/assets/jquery-sparkline/jquery.sparkline.js": "/assets/jquery-sparkline/jquery.sparkline.js",
+    "/assets/js/custom.js": "/assets/js/custom.js",
+    "/assets/toastr/css/toastr.css": "/assets/toastr/css/toastr.css",
+    "/assets/toastr/js/toastr.js": "/assets/toastr/js/toastr.js",
+    "/assets/sweetalert/js/sweetalert.js": "/assets/sweetalert/js/sweetalert.js"
 }

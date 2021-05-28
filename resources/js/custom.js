@@ -70,22 +70,17 @@ $(function() {
     //tooltip
     // ============================================================== 
     $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-    // ============================================================== 
-    //Popover
-    // ============================================================== 
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        // ============================================================== 
+        //Popover
+        // ============================================================== 
     $(function() {
-        $('[data-toggle="popover"]').popover()
-    })
-
-    // ============================================================== 
-    // Perfact scrollbar
-    // ============================================================== 
-    $('.scroll-sidebar, .right-side-panel, .message-center, .right-sidebar').perfectScrollbar();
-    // ============================================================== 
-    // Resize all elements
-    // ============================================================== 
+            $('[data-toggle="popover"]').popover()
+        })
+        // ============================================================== 
+        // Resize all elements
+        // ============================================================== 
     $("body, .page-wrapper").trigger("resize");
     // ============================================================== 
     // To do list
@@ -116,25 +111,25 @@ $(function() {
     // ==============================================================
 
     var mySkins = [
-        "skin-default",
-        "skin-green",
-        "skin-red",
-        "skin-blue",
-        "skin-purple",
-        "skin-megna",
-        "skin-default-dark",
-        "skin-green-dark",
-        "skin-red-dark",
-        "skin-blue-dark",
-        "skin-purple-dark",
-        "skin-megna-dark"
-    ]
-    /**
-     * Get a prestored setting
-     *
-     * @param String name Name of of the setting
-     * @returns String The value of the setting | null
-     */
+            "skin-default",
+            "skin-green",
+            "skin-red",
+            "skin-blue",
+            "skin-purple",
+            "skin-megna",
+            "skin-default-dark",
+            "skin-green-dark",
+            "skin-red-dark",
+            "skin-blue-dark",
+            "skin-purple-dark",
+            "skin-megna-dark"
+        ]
+        /**
+         * Get a prestored setting
+         *
+         * @param String name Name of of the setting
+         * @returns String The value of the setting | null
+         */
     function get(name) {
         if (typeof(Storage) !== 'undefined') {
             //return localStorage.getItem(name)
@@ -174,7 +169,7 @@ $(function() {
     function setup() {
         var tmp = get('skin')
         if (tmp && $.inArray(tmp, mySkins)) changeSkin(tmp)
-        // Add the change skin listener
+            // Add the change skin listener
         $('[data-skin]').on('click', function(e) {
             if ($(this).hasClass('knob')) return
             e.preventDefault()
@@ -186,4 +181,97 @@ $(function() {
         $("#themecolors li a").removeClass("working"),
             $(this).addClass("working")
     })
+
+    var inputs = $("form .nextEnter").get()
+    $("form").on("keydown", ".nextEnter", function(e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            var which = inputs.indexOf(this),
+                next = inputs[which + 1];
+            if (next) {
+                next.focus()
+                next.parentElement.scrollIntoView({ behavior: "smooth" })
+            }
+        }
+    })
+});
+
+//Config Toastr
+toastr.options.closeButton = true;
+toastr.options.debug = false;
+toastr.options.newestOnTop = true;
+toastr.options.progressBar = true;
+toastr.options.positionClass = "toast-top-right";
+toastr.options.preventDuplicates = false;
+toastr.options.onclick = null;
+toastr.options.showDuration = "300";
+toastr.options.hideDuration = "1000";
+toastr.options.timeOut = "4000";
+toastr.options.extendedTimeOut = "1000";
+toastr.options.showEasing = "swing";
+toastr.options.hideEasing = "linear";
+toastr.options.showMethod = "fadeIn";
+toastr.options.hideMethod = "fadeOut";
+
+//Toastr function
+function toastAlert(level, msg) {
+    switch (level.toLowerCase()) {
+        case 'success':
+            toastr.success(msg, 'Sucesso')
+            break;
+        case 'warning':
+            toastr.warning(msg, 'Alerta')
+            break;
+        case 'info':
+            toastr.info(msg, 'Info')
+            break;
+        case 'error':
+            toastr.error(msg, 'Erro')
+            break;
+        default:
+            toastr.error(msg, 'Erro')
+            break;
+    }
+}
+
+function customConfirm(title, text, callback) {
+    swal({
+        title: title,
+        text: text,
+        icon: "warning",
+        buttons: ['Cancelar', 'OK'],
+        dangerMode: true,
+    }).then((isConfirm) => {
+        if (isConfirm) {
+            callback()
+        }
+    });
+}
+
+function invalidateInput(inputName, text) {
+    $("[name='" + inputName + "']").addClass('input-invalidate');
+    $("#fdbk" + inputName).text(text);
+}
+
+function clearAllInputsValidations(form) {
+    $("form#" + form + " :input").each(function() {
+        $(this).removeClass('input-invalidate');
+        $('#fdbk' + $(this).attr('name')).text('');
+    });
+}
+
+function clearAllInputsValues(form) {
+    $("form#" + form + " :input").each(function() {
+        $(this).val('');
+        $(this).removeClass('input-invalidate');
+        $('#fdbk' + $(this).attr('name')).text('');
+    });
+}
+
+$('.input-date').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR",
+    autoclose: true,
+    todayHighlight: true,
+    toggleActive: true
 });
