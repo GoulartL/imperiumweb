@@ -14,48 +14,41 @@ class OrderController extends Controller
     {
         $query = DB::table('orders')
             ->join('customers', 'customers.id', '=', 'orders.customer')
-            ->select('orders.*', 'customers.name as customer_name', 'orders.qty * orders.price as total', 'orders.id');
+            ->select('orders.*', 'customers.name as customer_name', DB::raw('orders.qty*orders.price as total'), 'orders.id');
 
         return DataTables::of($query)->make(true);
     }
 
     public function show(Order $order)
     {
-        return $order->toJson();
+        return response(
+            array(
+                "data" => array(
+                    $order->toArray()
+                )
+            )
+        );
     }
 
-    /*public function store(Request $request)
+    public function store(Request $request)
     {
         $order = new Order();
         try {
             $error = "";
             $errorData = [];
-
             $validatedData = $request->validate(Order::$fieldsRules);
-
             $order->company = 1;
-            $order->type = strtoupper($request->type) == "CNPJ" ? 1 : 2;
-            $order->taxvat = $request->taxvat;
-            $order->state_register_id = $request->idregister;
-            $order->name = $request->name;
-            $order->fantasy_name = $request->shortname;
-            $order->address = $request->address;
-            $order->number = $request->number;
-            $order->district = $request->district;
-            $order->city = $request->city;
-            $order->state = $request->state;
-            $order->complement = $request->complement;
-            $order->zip_code = $request->zipcode;
-            $order->contact_name = $request->contactname;
-            $order->phone_number_1 = $request->tel1;
-            $order->phone_number_2 = $request->tel2;
-            $order->email_1 = $request->email1;
-            $order->email_2 = $request->email2;
-            $order->bank = $request->bank;
-            $order->agency = $request->agency;
-            $order->account = $request->accountnumber;
-            $order->account_name = $request->accountname;
-            $order->observation = $request->observations;
+            $order->code = $request->code;
+            $order->customer = $request->customer;
+            $order->incoming_invoice = $request->incoming_invoice;
+            $order->ref = $request->ref;
+            $order->model = $request->model;
+            $order->collection = $request->collection;
+            $order->qty = $request->qty;
+            $order->price = $request->price;
+            $order->observation = $request->observation;
+            $order->sector = 1;
+            $order->entry_date = is_null($request->entry_date) ? null : \DateTime::createFromFormat('d/m/Y', $request->entry_date)->format('Y-m-d');
             $order->save();
         } catch (\Illuminate\Validation\ValidationException $e) {
             $error = "Há campos que não foram preenchidos corretamente!";
@@ -78,30 +71,33 @@ class OrderController extends Controller
             $error = "";
             $errorData = [];
 
-            $validatedData = $request->validate(Order::$fieldsRules);
-
-            $order->type = strtoupper($request->type) == "CNPJ" ? 1 : 0;
-            $order->taxvat = $request->taxvat;
-            $order->state_register_id = $request->idregister;
-            $order->name = $request->name;
-            $order->fantasy_name = $request->shortname;
-            $order->address = $request->address;
-            $order->number = $request->number;
-            $order->district = $request->district;
-            $order->city = $request->city;
-            $order->state = $request->state;
-            $order->complement = $request->complement;
-            $order->zip_code = $request->zipcode;
-            $order->contact_name = $request->contactname;
-            $order->phone_number_1 = $request->tel1;
-            $order->phone_number_2 = $request->tel2;
-            $order->email_1 = $request->email1;
-            $order->email_2 = $request->email2;
-            $order->bank = $request->bank;
-            $order->agency = $request->agency;
-            $order->account = $request->accountnumber;
-            $order->account_name = $request->accountname;
-            $order->observation = $request->observations;
+            if (!isset($request->formorder)) {
+                $validatedData = $request->validate(Order::$fieldsRules);
+                $order->code = $request->code;
+                $order->customer = $request->customer;
+                $order->incoming_invoice = $request->incoming_invoice;
+                $order->ref = $request->ref;
+                $order->model = $request->model;
+                $order->collection = $request->collection;
+                $order->qty = $request->qty;
+                $order->price = $request->price;
+                $order->observation = $request->observation;
+                $order->entry_date = is_null($request->entry_date) ? null : \DateTime::createFromFormat('d/m/Y', $request->entry_date)->format('Y-m-d');
+            } else {
+                $order->cancellation_date = is_null($request->cancellation_date) ? null : \DateTime::createFromFormat('d/m/Y', $request->cancellation_date)->format('Y-m-d');
+                $order->delivery_date_sewing = is_null($request->delivery_date_sewing) ? null : \DateTime::createFromFormat('d/m/Y', $request->delivery_date_sewing)->format('Y-m-d');
+                $order->expected_date_sewing = is_null($request->expected_date_sewing) ? null : \DateTime::createFromFormat('d/m/Y', $request->expected_date_sewing)->format('Y-m-d');
+                $order->departure_date_sewing = is_null($request->departure_date_sewing) ? null : \DateTime::createFromFormat('d/m/Y', $request->departure_date_sewing)->format('Y-m-d');
+                $order->delivery_date_finishing = is_null($request->delivery_date_finishing) ? null : \DateTime::createFromFormat('d/m/Y', $request->delivery_date_finishing)->format('Y-m-d');
+                $order->expected_date_finishing = is_null($request->expected_date_finishing) ? null : \DateTime::createFromFormat('d/m/Y', $request->expected_date_finishing)->format('Y-m-d');
+                $order->departure_date_finishing = is_null($request->departure_date_finishing) ? null : \DateTime::createFromFormat('d/m/Y', $request->departure_date_finishing)->format('Y-m-d');
+                $order->entry_date_expedition = is_null($request->entry_date_expedition) ? null : \DateTime::createFromFormat('d/m/Y', $request->entry_date_expedition)->format('Y-m-d');
+                $order->expected_date_expedition = is_null($request->expected_date_expedition) ? null : \DateTime::createFromFormat('d/m/Y', $request->expected_date_expedition)->format('Y-m-d');
+                $order->departure_date_expedition = is_null($request->departure_date_expedition) ? null : \DateTime::createFromFormat('d/m/Y', $request->departure_date_expedition)->format('Y-m-d');
+                $order->cancellation_reason = $request->cancellation_reason;
+                $order->sector = $request->sector;
+                $order->outgoing_invoice = $request->outgoing_invoice;
+            }
             $order->save();
         } catch (\Illuminate\Validation\ValidationException $e) {
             $error = "Há campos que não foram preenchidos corretamente!";
@@ -112,7 +108,7 @@ class OrderController extends Controller
 
         return json_encode([
             "status" => !$error ? "success" : "error",
-            "message" => !$error ? "Cadastrado com sucesso!" : $error,
+            "message" => !$error ? "Atualizado com sucesso!" : $error,
             "data" =>  $errorData
         ]);
     }
@@ -130,5 +126,5 @@ class OrderController extends Controller
             "status" => !$error ? "success" : "error",
             "message" => !$error ? "Removido com sucesso!" : $error
         ]);
-    }*/
+    }
 }

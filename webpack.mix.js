@@ -69,4 +69,5 @@ mix
     .js('resources/views/system/employees/employees.js', 'public/assets/views/employees/employees.js')
     .js('resources/views/system/suppliers/suppliers.js', 'public/assets/views/suppliers/suppliers.js')
     .js('resources/views/system/financial/receipts/receipts.js', 'public/assets/views/financial/receipts/receipts.js')
-    .js('resources/views/system/financial/payments/payments.js', 'public/assets/views/financial/payments/payments.js');
+    .js('resources/views/system/financial/payments/payments.js', 'public/assets/views/financial/payments/payments.js')
+    .js('resources/views/system/production/orders/orders.js', 'public/assets/views/production/orders/orders.js');

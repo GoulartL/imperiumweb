@@ -26,6 +26,8 @@ class CreateOrdersTable extends Migration
             $table->float('qty');
             $table->float('price');
 
+            $table->integer('sector');
+
             $table->date('cancellation_date')->nullable();
             $table->string('cancellation_reason')->nullable();
 
@@ -39,6 +41,7 @@ class CreateOrdersTable extends Migration
 
             $table->date('entry_date_expedition')->nullable();
             $table->string('outgoing_invoice')->nullable();
+            $table->date('expected_date_expedition')->nullable();
             $table->date('departure_date_expedition')->nullable();
 
             $table->string('observation')->nullable();

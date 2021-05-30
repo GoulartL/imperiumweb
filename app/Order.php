@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $table = 'receipts';
+    protected $table = 'orders';
 
     protected $fillable = [
         'id','company','code','customer','entry_date','incoming_invoice','ref','model','collection','qty',
@@ -16,12 +16,9 @@ class Order extends Model
     ];
 
     public static $fieldsRules = [
-        'id' => 'required',
-        'company' => 'required',
         'code' => 'required',
         'customer' => 'required',
         'entry_date' => 'required',
-        'incoming_invoice' => 'required',
         'qty' => 'required',
         'price' => 'required'
     ];

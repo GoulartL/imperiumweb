@@ -47,9 +47,9 @@ Route::put('pagamentos/editar/{payment}', 'Payment\\PaymentController@update')->
 Route::delete('pagamentos/remover/{payment}', 'Payment\\PaymentController@destroy')->name('payments.destroy');
 
 Route::get('pedidos', 'Order\\OrderController@index')->name('orders.index');
-/*Route::get('pedidos/{order}', 'Order\\OrderController@show')->name('orders.show');
+Route::get('pedidos/{order}', 'Order\\OrderController@show')->name('orders.show');
 Route::post('pedidos/guardar', 'Order\\OrderController@store')->name('orders.store');
 Route::put('pedidos/editar/{order}', 'Order\\OrderController@update')->name('orders.update');
-Route::delete('pedidos/remover/{order}', 'Order\\OrderController@destroy')->name('orders.destroy');*/
+Route::delete('pedidos/remover/{order}', 'Order\\OrderController@destroy')->name('orders.destroy');
 
 Route::get('especies/select', 'SpecieController@selectComponent')->name('species.select2');

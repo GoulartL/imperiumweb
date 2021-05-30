@@ -42,5 +42,9 @@ Route::get('/fluxo-de-caixa', function () {
 })->name('system.cashFlow');
 
 Route::get('/pedidos', function () {
-    return view('system.orders.orders');
+    return view('system.production.orders.orders');
 })->name('system.orders');
+
+Route::get('/producao/dashboard', function () {
+    return view('system.production.dashboard.dashboard');
+})->name('system.production.dashboard');

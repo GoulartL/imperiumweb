@@ -5,6 +5,7 @@
     "/assets/views/employees/employees.js": "/assets/views/employees/employees.js",
     "/assets/views/financial/payments/payments.js": "/assets/views/financial/payments/payments.js",
     "/assets/views/financial/receipts/receipts.js": "/assets/views/financial/receipts/receipts.js",
+    "/assets/views/production/orders/orders.js": "/assets/views/production/orders/orders.js",
     "/assets/views/suppliers/suppliers.js": "/assets/views/suppliers/suppliers.js",
     "/assets/jquery/jquery.js": "/assets/jquery/jquery.js",
     "/assets/datatables/datatables.css": "/assets/datatables/datatables.css",
