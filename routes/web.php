@@ -45,6 +45,4 @@ Route::get('/pedidos', function () {
     return view('system.production.orders.orders');
 })->name('system.orders');
 
-Route::get('/producao/dashboard', function () {
-    return view('system.production.dashboard.dashboard');
-})->name('system.production.dashboard');
+Route::get('/producao/dashboard', 'ProductionDashboard\\ProductionDashboard@show')->name('system.production.dashboard');

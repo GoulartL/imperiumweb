@@ -71,6 +71,8 @@ class OrderController extends Controller
             $error = "";
             $errorData = [];
 
+            $datetimeNow = new \DateTime('NOW');
+
             if (!isset($request->formorder)) {
                 $validatedData = $request->validate(Order::$fieldsRules);
                 $order->code = $request->code;
@@ -96,6 +98,15 @@ class OrderController extends Controller
                 $order->departure_date_expedition = is_null($request->departure_date_expedition) ? null : \DateTime::createFromFormat('d/m/Y', $request->departure_date_expedition)->format('Y-m-d');
                 $order->cancellation_reason = $request->cancellation_reason;
                 $order->sector = $request->sector;
+
+                if ($order->sector == 5 and is_null($request->departure_date_expedition)) {
+                    $order->departure_date_expedition = $datetimeNow->format('Y-m-d');
+                } else if ($order->sector == 4 and is_null($request->departure_date_finishing)) {
+                    $order->departure_date_finishing = $datetimeNow->format('Y-m-d');
+                } else if ($order->sector == 3 and is_null($request->departure_date_sewing)) {
+                    $order->departure_date_sewing = $datetimeNow->format('Y-m-d');
+                }
+
                 $order->outgoing_invoice = $request->outgoing_invoice;
             }
             $order->save();

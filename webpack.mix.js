@@ -57,6 +57,7 @@ mix
     )
     //Others
     .scripts('resources/js/waves.js', 'public/assets/js/waves.js')
+    .scripts('node_modules/chart.js/dist/chart.js', 'public/assets/chartjs/chart.js')
     .scripts('resources/js/sidebarmenu.js', 'public/assets/js/sidebarmenu.js')
     .scripts('node_modules/sticky-kit/dist/sticky-kit.js', 'public/assets/sticky-kit/sticky-kit.js')
     .scripts('node_modules/jquery-sparkline/jquery.sparkline.js', 'public/assets/jquery-sparkline/jquery.sparkline.js')
@@ -70,4 +71,5 @@ mix
     .js('resources/views/system/suppliers/suppliers.js', 'public/assets/views/suppliers/suppliers.js')
     .js('resources/views/system/financial/receipts/receipts.js', 'public/assets/views/financial/receipts/receipts.js')
     .js('resources/views/system/financial/payments/payments.js', 'public/assets/views/financial/payments/payments.js')
+    .js('resources/views/system/production/dashboard/dashboard.js', 'public/assets/views/production/dashboard/dashboard.js')
     .js('resources/views/system/production/orders/orders.js', 'public/assets/views/production/orders/orders.js');
