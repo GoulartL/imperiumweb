@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('system.home');
 })->name('system.home');
 
+Route::get('/login', function () {
+    return view('system.login.login');
+})->name('system.login');
+
 Route::get('/clientes', function () {
     return view('system.customers.customers');
 })->name('system.customers');

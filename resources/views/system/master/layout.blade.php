@@ -31,21 +31,18 @@
 
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                {{-- Logo  --}}
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">
-                        <span>
-                            <img src="{{ asset('assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
-                            <img src="{{ asset('assets/images/logo-text.png') }}" class="light-logo"
-                                alt="homepage" /></span>
-                    </a>
-                </div>
-                <div class="navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
+                <div class="navbar-collapse w-100">
+                    <ul class="navbar-nav">
                         <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light"
-                                href="javascript:void(0)"><i class="fas fa-bars"></i></a></li>
+                                href="javascript:void(0)"><i class="fas fa-bars fa-lg"></i></a></li>
                     </ul>
-                    <ul class="navbar-nav my-lg-0">
+                    <div class="navbar-header">
+                        <a class="navbar-brand ml-0 ml-md-2" href="/">
+                            <img src="{{ asset('assets/images/WEB_IMPERIUM.svg') }}" width="100" class="dark-logo" />
+                            <img src="{{ asset('assets/images/WEB_IMPERIUM.svg') }}" width="100" class="light-logo" />
+                        </a>
+                    </div>
+                    <ul class="navbar-nav my-lg-0 ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
@@ -59,8 +56,7 @@
 
         <aside class="left-sidebar">
             <div class="d-flex no-block nav-text-box align-items-center">
-                <span><img src="{{ asset('assets/images/dark-logo-text.png') }}" width="100"
-                        alt="elegant admin template"></span>
+                <img src="{{ asset('assets/images/WEB_IMPERIUM_DARK.svg') }}" width="100" />
                 <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i
                         class="fas fa-bars"></i></a>
                 <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i
@@ -71,8 +67,8 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li><a class="waves-effect waves-dark" href="{{ Route('system.home') }}"
-                                aria-expanded="false"><i class="fa fa-home"></i><span
-                                    class="hide-menu">Início</span></a></li>
+                                aria-expanded="false"><i class="fa fa-home"></i>
+                                <span class="hide-menu">Início</span></a></li>
                         <li><a data-toggle="collapse" href="#collapseCrud" role="button" aria-expanded="false"
                                 aria-controls="collapseCrud" class="waves-effect waves-dark" aria-expanded="false"><i
                                     class="fa fa-user-plus"></i><span class="hide-menu">Cadastros</span></a>
@@ -99,16 +95,16 @@
                             </div>
                         </li>
                         <li><a data-toggle="collapse" href="#collapseProduction" role="button" aria-expanded="false"
-                            aria-controls="collapseProduction" class="waves-effect waves-dark"
-                            aria-expanded="false"><i class="fas fa-cut"></i><span
-                                class="hide-menu">Produção</span></a>
-                        <div class="collapse pl-4" id="collapseProduction">
-                            <a class="waves-effect waves-dark" href="{{ Route('system.production.dashboard') }}"
-                                aria-expanded="false"><span class="hide-menu">Dashboard</span></a>
-                            <a class="waves-effect waves-dark" href="{{ Route('system.orders') }}"
-                                aria-expanded="false"><span class="hide-menu">Pedidos</span></a>
-                        </div>
-                    </li>
+                                aria-controls="collapseProduction" class="waves-effect waves-dark"
+                                aria-expanded="false"><i class="fas fa-cut"></i><span
+                                    class="hide-menu">Produção</span></a>
+                            <div class="collapse pl-4" id="collapseProduction">
+                                <a class="waves-effect waves-dark" href="{{ Route('system.production.dashboard') }}"
+                                    aria-expanded="false"><span class="hide-menu">Dashboard</span></a>
+                                <a class="waves-effect waves-dark" href="{{ Route('system.orders') }}"
+                                    aria-expanded="false"><span class="hide-menu">Pedidos</span></a>
+                            </div>
+                        </li>
                     </ul>
                 </nav>
             </div>
