@@ -126,10 +126,12 @@
     <script src="{{ asset('assets/toastr/js/toastr.js') }}"></script>
     <script src="{{ asset('assets/sweetalert/js/sweetalert.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    {{-- <script type="module" src="{{ asset('assets/moment/locale/momentptbr.js') }}"></script> --}}
     <script>
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            headers: { 
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'company': {{ auth()->user()->company }}
+            }
         });
     </script>
     @yield('scripts')

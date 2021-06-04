@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers\Customer;
 
+
 use App\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $company = $request->header('company');
+
         return datatables()
-            ->eloquent(Customer::query())
+            ->eloquent(
+                Customer::where('company', $company)
+                    ->orderBy('name')
+            )
             ->escapeColumns([])
             ->toJson();
     }
