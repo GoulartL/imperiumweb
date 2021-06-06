@@ -7,6 +7,7 @@
     "/assets/views/financial/receipts/receipts.js": "/assets/views/financial/receipts/receipts.js",
     "/assets/views/production/dashboard/dashboard.js": "/assets/views/production/dashboard/dashboard.js",
     "/assets/views/production/orders/orders.js": "/assets/views/production/orders/orders.js",
+    "/assets/views/production/production-diary/production_diary.js": "/assets/views/production/production-diary/production_diary.js",
     "/assets/views/suppliers/suppliers.js": "/assets/views/suppliers/suppliers.js",
     "/assets/jquery/jquery.js": "/assets/jquery/jquery.js",
     "/assets/datatables/datatables.css": "/assets/datatables/datatables.css",

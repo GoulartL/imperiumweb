@@ -99,10 +99,12 @@
                                 aria-expanded="false"><i class="fas fa-cut"></i><span
                                     class="hide-menu">Produção</span></a>
                             <div class="collapse pl-4" id="collapseProduction">
-                                <a class="waves-effect waves-dark" href="{{ Route('system.production.dashboard') }}"
+                                <a class="waves-effect waves-dark" href="{{ Route('system.dashboard.production') }}"
                                     aria-expanded="false"><span class="hide-menu">Dashboard</span></a>
                                 <a class="waves-effect waves-dark" href="{{ Route('system.orders') }}"
                                     aria-expanded="false"><span class="hide-menu">Pedidos</span></a>
+                                <a class="waves-effect waves-dark" href="{{ Route('system.production_diary') }}"
+                                    aria-expanded="false"><span class="hide-menu">Diário de produção</span></a>
                             </div>
                         </li>
                     </ul>

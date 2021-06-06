@@ -8,20 +8,24 @@ $(document).ready(function() {
         historicomes = response.data
     });
 
-    var ctx = document.getElementById('myChart');
+    var ctx = document.getElementById('chartProduction');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: historicomes.labels,
-            datasets: historicomes.datasets
+            datasets: [{
+                label: 'Produzido',
+                data: historicomes.data,
+                borderWidth: 2,
+                borderColor: 'rgb(75, 192, 192)',
+            }]
         },
         options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
-        },
+        }
     });
 });

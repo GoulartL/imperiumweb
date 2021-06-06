@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\ProductionDashboard;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ProductionDashboard extends Controller
+class ProductionController extends Controller
 {
 
     public function show()
@@ -43,7 +43,7 @@ class ProductionDashboard extends Controller
         ];
 
         $status = DB::select('SELECT sector, count(sector) orders, sum(qty) qty, sum(price*qty) total,
-            (SELECT sum(B.price*B.qty) FROM orders A WHERE sector <> 5) as total_all
+            (SELECT sum(A.price*A.qty) FROM orders A WHERE sector <> 5) as total_all
             FROM orders B
             WHERE sector <> 5
             and company = 1
@@ -86,7 +86,7 @@ class ProductionDashboard extends Controller
         ]);
     }
 
-    public function historyMonth()
+    public function HistoryMonth()
     {
         
     }

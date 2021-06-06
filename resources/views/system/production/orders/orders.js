@@ -127,7 +127,7 @@ $(document).ready(function() {
 
     $('#tbOrders tbody').on('click', '.remove', function() {
         var data = table.row($(this).parents('tr')).data();
-        customConfirm('Confirmar ação?', 'Você está prestes a excluir o pedido [' + data['code'] + ']', function() {
+        customConfirm('Confirmar ação?', 'Se você excluir este pedido, todos os registros no diário de produção deste pedido também serão deletados!', function() {
             $.ajax({
                 type: "DELETE",
                 url: "/api/pedidos/remover/" + data['id'],

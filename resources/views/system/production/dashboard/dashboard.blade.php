@@ -96,8 +96,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="mb-3">Histórico do mês</h4>
-                    <canvas id="myChart" height="70"></canvas>
+                    <h4 class="mb-3">Produção Diária no mês</h4>
+                    <canvas id="chartProduction" height="70"></canvas>
                 </div>
             </div>
         </div>

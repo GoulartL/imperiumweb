@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Order;
 use App\Http\Controllers\Controller;
+use App\ProductionDiary;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -21,11 +22,15 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+
+        $query = DB::table('orders')
+            ->join('customers', 'customers.id', '=', 'orders.customer')
+            ->select('orders.*', 'customers.name as customer_name', DB::raw('orders.qty*orders.price as total'), 'orders.id')
+            ->where('orders.id', '=', $order->id)->get();
+
         return response(
             array(
-                "data" => array(
-                    $order->toArray()
-                )
+                "data" => $query->toArray()
             )
         );
     }
@@ -124,10 +129,44 @@ class OrderController extends Controller
         ]);
     }
 
+    public function selectComponent(Request $request)
+    {
+        $search = $request->search;
+
+        if ($search == '') {
+            $orders = Order::orderby('code', 'asc')
+                ->join('customers', 'customers.id', '=', 'orders.customer')
+                ->select('orders.id', 'code', 'customers.name as customer_name')->paginate(25);
+        } else {
+            $orders = Order::orderby('code', 'asc')
+                ->join('customers', 'customers.id', '=', 'orders.customer')
+                ->select('orders.id', 'code', 'customers.name as customer_name')
+                ->where('code', 'like', '%' . $search . '%')->paginate(25);
+        }
+
+        $response = [];
+        foreach ($orders as $order) {
+            $response[] = array(
+                "id" => $order->id,
+                "text" => $order->code . ' - ' . $order->customer_name
+            );
+        }
+
+        return json_encode(
+            [
+                "results" => $response,
+                "pagination" => [
+                    "more" => $orders->hasMorePages()
+                ]
+            ]
+        );
+    }
+
     public function destroy(Order $order)
     {
         try {
             $error = "";
+            ProductionDiary::where('order', $order->id)->delete();
             $order->delete();
         } catch (\Throwable $th) {
             $error = $th->getMessage();

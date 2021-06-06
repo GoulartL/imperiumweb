@@ -48,4 +48,8 @@ Route::get('/pedidos', function () {
     return view('system.production.orders.orders');
 })->name('system.orders')->middleware('auth');
 
-Route::get('/producao/dashboard', 'ProductionDashboard\\ProductionDashboard@show')->name('system.production.dashboard')->middleware('auth');
+Route::get('/diario_de_producao', function () {
+    return view('system.production.production-diary.production_diary');
+})->name('system.production_diary')->middleware('auth');
+
+Route::get('/producao/dashboard', 'Dashboard\\ProductionController@show')->name('system.dashboard.production')->middleware('auth');
