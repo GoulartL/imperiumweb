@@ -85,7 +85,7 @@
                     <div class="card" style="height: 120px">
                         <div class="card-body bg-secondary text-nowrap">
                             <h5 class="text-center">Abertos mês</h5>
-                            <h2 class="text-center mt-3">{{ $indicators->opened_today }}</h2>
+                            <h2 class="text-center mt-3">{{ $indicators->opened_month }}</h2>
                         </div>
                     </div>
                 </div>
