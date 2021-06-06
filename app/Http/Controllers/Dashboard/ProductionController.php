@@ -51,8 +51,8 @@ class ProductionController extends Controller
             WHERE sector <> 5
             and company = :COMPANY
             group by sector', [
-                ':COMPANY' => $company
-            ]);
+            ':COMPANY' => $company
+        ]);
 
         $indicators = DB::select("SELECT
         (
@@ -77,11 +77,11 @@ class ProductionController extends Controller
             FROM orders
             WHERE month(entry_date) = month(now()) and year(entry_date) = year(now()) and company = :COMPANY4
         ) as opened_month", [
-                ':COMPANY1' => $company,
-                ':COMPANY2' => $company,
-                ':COMPANY3' => $company,
-                ':COMPANY4' => $company,
-            ])[0];
+            ':COMPANY1' => $company,
+            ':COMPANY2' => $company,
+            ':COMPANY3' => $company,
+            ':COMPANY4' => $company,
+        ])[0];
 
         foreach ($status as $key => $value) {
             $sectors[$value->sector]['orders'] = $value->orders;
@@ -96,8 +96,27 @@ class ProductionController extends Controller
         ]);
     }
 
-    public function HistoryMonth()
+    public function HistoryMonth(Request $request)
     {
-        
+        $company = $request->header('company');
+
+        $history = DB::select(
+            "select DATE_FORMAT(date, '%d/%m/%Y') date, SUM(production_diary.qty*orders.price) total
+            FROM production_diary
+            inner join orders on orders.id = production_diary.order
+            where date between curdate()-30 and curdate() and production_diary.company = :COMPANY
+            group by production_diary.date
+            ORDER BY date",
+            [
+                ':COMPANY' => $company
+            ]
+        );
+
+        return response(
+            array(
+                "label" => array_column($history, "date"),
+                "data" => array_column($history, "total")
+            )
+        ); 
     }
 }

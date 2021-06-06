@@ -15,9 +15,9 @@ class PaymentController extends Controller
         $company = $request->header('company');
         $query = DB::table('payments')
             ->where('payments.company', '=', $company)
-            ->join('customers', 'customers.id', '=', 'payments.client')
+            ->join('suppliers', 'suppliers.id', '=', 'payments.supplier')
             ->join('species', 'species.id', '=', 'payments.species')
-            ->select('payments.*', 'customers.name as customer_name', 'species.name as specie_name', 'payments.id');
+            ->select('payments.*', 'suppliers.name as supplier_name', 'species.name as specie_name', 'payments.id');
 
         return DataTables::of($query)->make(true);
     }
@@ -29,7 +29,8 @@ class PaymentController extends Controller
         $query = DB::table('payments')
             ->where('payments.id', '=', $payment->id)
             ->where('payments.company', '=', $company)
-            ->select('payments.*')->get();
+            ->join('suppliers', 'suppliers.id', '=', 'payments.supplier')
+            ->select('payments.*', 'suppliers.name as supplier_name', 'species.name as specie_name', 'payments.id')->get();
 
         return response(
             array(
@@ -60,8 +61,8 @@ class PaymentController extends Controller
                         case 'description':
                             $tempPayment['description'] = $header['value'];
                             break;
-                        case 'client':
-                            $tempPayment['client'] = $header['value'];
+                        case 'supplier':
+                            $tempPayment['supplier'] = $header['value'];
                             break;
                         case 'species':
                             $tempPayment['species'] = $header['value'];
@@ -79,7 +80,7 @@ class PaymentController extends Controller
                     $payment->company = $company;
                     $payment->emission = \DateTime::createFromFormat('d/m/Y', $tempPayment['emission'])->format('Y-m-d');
                     $payment->description = $tempPayment['description'];
-                    $payment->client = $tempPayment['client'];
+                    $payment->supplier = $tempPayment['supplier'];
                     $payment->species = $tempPayment['species'];
                     $payment->portion = $value[0];
                     $payment->value = $valuePay;
@@ -110,7 +111,7 @@ class PaymentController extends Controller
             $error = "";
             $errorData = [];
 
-            if (!isset($request->payment)) {
+            if (!isset($request->paymentid)) {
                 $validatedData = $request->validate(Payment::$fieldsRules);
                 $payment->description = $request->description;
                 $payment->emission = \DateTime::createFromFormat('d/m/Y', $request->emission)->format('Y-m-d');

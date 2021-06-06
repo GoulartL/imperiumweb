@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->integer('company');
             $table->string('description');
-            $table->integer('client');
+            $table->integer('supplier');
             $table->date('emission');
             $table->integer('portion');
             $table->date('due_date');

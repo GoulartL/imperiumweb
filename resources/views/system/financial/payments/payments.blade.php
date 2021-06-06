@@ -22,6 +22,13 @@
             </div>
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <span class="mr-4"><i class="rounded bg-success px-2 mr-1"></i>Pagamento completo</span>
+            <span class="mr-4"><i class="rounded bg-warning px-2 mr-1"></i>Pagamento parcial</span>
+            <span class="mr-4"><i class="rounded bg-danger px-2 mr-1"></i>Título Vencido</span>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -30,7 +37,7 @@
                         <thead>
                             <tr>
                                 <th data-priority="0">#</th>
-                                <th data-priority="5">Cliente</th>
+                                <th data-priority="5">Fornecedor</th>
                                 <th data-priority="1">Desc.</th>
                                 <th data-priority="3">Valor</th>
                                 <th data-priority="2">Vencto.</th>
@@ -41,8 +48,6 @@
                                 <th data-priority="7">Espécie</th>
                                 <th data-priority="9">Observações</th>
                                 <th data-priority="0">Ações</th>
-                                <th></th>
-                                <th></th>
                             </tr>
                         </thead>
                     </table>
@@ -102,13 +107,13 @@
                             <div id="fdbkdescription" class="label-invalidate text-danger"></div>
                         </div>
                     </div>
-                    <div class="form-row" id="mdDivCustomer">
+                    <div class="form-row" id="mdDivSupplier">
                         <div class="form-group col-md-12">
-                            <label for="mdInputCustomers">Cliente</label>
-                            <select class="custom-select nextEnter select-server-side" data-values='clientes'
-                                id="mdInputCustomers" name="client">
+                            <label for="mdInputSuppliers">Fornecedor</label>
+                            <select class="custom-select nextEnter select-server-side" data-values='fornecedores'
+                                id="mdInputSuppliers" name="supplier">
                             </select>
-                            <div id="fdbkclient" class="label-invalidate text-danger"></div>
+                            <div id="fdbksupplier" class="label-invalidate text-danger"></div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -206,8 +211,8 @@
                                             <td class="px-2 text-right" id="mdPayID"></td>
                                         </tr>
                                         <tr>
-                                            <td class="px-2">Cliente</td>
-                                            <td class="px-2 text-right" id="mdPayCustomer"></td>
+                                            <td class="px-2">Fornecedor</td>
+                                            <td class="px-2 text-right" id="mdPaySupplier"></td>
                                         </tr>
                                         <tr>
                                             <td class="px-2">Descrição</td>
@@ -231,7 +236,8 @@
 
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" class="form-control" id="mdPaymentID" autocomplete="off" hidden name='payment'>
+                            <input type="text" class="form-control" id="mdPaymentID" autocomplete="off" hidden
+                                name='paymentid'>
                             <div class="form-group col-12">
                                 <label for="mdPayInputPaymentDate">Data Pagamento</label>
                                 <input type="text" class="form-control nextEnter input-date" id="mdPayInputPaymentDate"

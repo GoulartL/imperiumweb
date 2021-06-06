@@ -22,6 +22,13 @@
             </div>
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <span class="mr-4 text-nowrap"><i class="rounded bg-success px-2 mr-1"></i>Recebimento completo</span>
+            <span class="mr-4 text-nowrap"><i class="rounded bg-warning px-2 mr-1"></i>Recebimento parcial</span>
+            <span class="mr-4 text-nowrap"><i class="rounded bg-danger px-2 mr-1"></i>Título Vencido</span>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -231,7 +238,8 @@
 
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" class="form-control" id="mdReceiptID" autocomplete="off" hidden name='receive'>
+                            <input type="text" class="form-control" id="mdReceiptID" autocomplete="off" hidden
+                                name='receive'>
                             <div class="form-group col-12">
                                 <label for="mdRecInputReceiptDate">Data Recebimento</label>
                                 <input type="text" class="form-control nextEnter input-date" id="mdRecInputReceiptDate"

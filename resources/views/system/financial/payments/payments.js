@@ -6,7 +6,7 @@ $(document).ready(function() {
         ajax: "/api/pagamentos",
         columns: [
             { data: 'id', name: 'id', className: 'status' },
-            { data: 'customer_name', name: 'customer_name' },
+            { data: 'supplier_name', name: 'supplier_name' },
             { data: 'description', name: 'description' },
             { data: 'value', name: 'value', render: $.fn.dataTable.render.number('.', ',', 2, 'R$') },
             { data: 'due_date', name: 'due_date' },
@@ -25,13 +25,10 @@ $(document).ready(function() {
                         "<button class='btn btn-primary btn-sm mx-1 remove'><i class='fas fa-trash action-table'></i></button>";
                 }
             },
-            { data: 'client', name: 'client' },
-            { data: 'species', name: 'species' },
         ],
         columnDefs: [
             { className: "text-nowrap-pc", targets: "_all" },
             { orderable: false, targets: [11] },
-            { targets: [12, 13], visible: false },
             { targets: [4, 6, 7], render: $.fn.dataTable.render.moment('DD/MM/YYYY') }
         ],
         createdRow: function(row, data, index) {
@@ -87,7 +84,7 @@ $(document).ready(function() {
     //Novo pagamento
     $('#mdAddPayments').on('click', function() {
         $('#mdDivValue, #mdDivDueDate').hide();
-        $('#mdPortionDiv, #mdDivCustomer').show();
+        $('#mdPortionDiv, #mdDivSupplier').show();
         $('#mdCrudTitle').html('Novo Pagamento');
         tablePortions.clear().draw();
         $("form#paymentsForm :input").each(function() {
@@ -106,9 +103,9 @@ $(document).ready(function() {
         $('#mdInputDescription').val(data['description']);
         $('#mdInputValue').val(data['value']);
         $('#mdInputPortions').val(data['portion']);
-        $('#mdInputCustomers').append(new Option(data['customer_name'], data['client'], true, true)).trigger('change');
+        $('#mdInputSuppliers').append(new Option(data['supplier_name'], data['supplier'], true, true)).trigger('change');
         $('#mdInputSpecies').append(new Option(data['specie_name'], data['species'], true, true)).trigger('change');
-        $('#mdPortionDiv, #mdDivCustomer').hide();
+        $('#mdPortionDiv, #mdDivSupplier').hide();
         $('#mdDivValue, #mdDivDueDate').show();
         $('#mdCrud').modal('show');
     });
@@ -116,14 +113,14 @@ $(document).ready(function() {
     $('#tbPayments tbody').on('click', '.action', function() {
         var data = table.row($(this).parents('tr')).data();
         $('#mdPaymentTitle').html('Lançar Pagamento');
-        $('#mdRecID').html(data['id']);
+        $('#mdPayID').html(data['id']);
         $('#mdPaymentID').val(data['id']);
         $('#mdInputID').val('');
-        $('#mdRecCustomer').html(data['client'] + ' - ' + data['customer_name']);
-        $('#mdRecDescription').html(data['description']);
-        $('#mdRecDueDate').html(moment(data['due_date']).format("DD/MM/YYYY"));
-        $('#mdRecPortion').html(data['portion']);
-        $('#mdRecValue').html(data['value']);
+        $('#mdPaySupplier').html(data['supplier'] + ' - ' + data['supplier_name']);
+        $('#mdPayDescription').html(data['description']);
+        $('#mdPayDueDate').html(moment(data['due_date']).format("DD/MM/YYYY"));
+        $('#mdPayPortion').html(data['portion']);
+        $('#mdPayValue').html(data['value']);
         $('#mdPayment').modal('show');
     });
 
