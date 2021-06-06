@@ -5,20 +5,47 @@ namespace App\Http\Controllers\Employee;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $company = $request->header('company');
+
         return datatables()
-            ->eloquent(Employee::query())
+            ->query(
+                DB::table('employees')
+                    ->where('employees.company', '=', $company)
+                    ->select(
+                        'employees.*',
+                        DB::raw("CASE sex WHEN 1 THEN 'MASC' WHEN 2 THEN 'FEM' END AS sex_name"),
+                        DB::raw("CASE civil_state WHEN 1 THEN 'Casado(a)' WHEN 2 THEN 'Solteiro(a)' END AS civil_state_name")
+                    )
+                    ->orderBy('name')
+            )
             ->escapeColumns([])
             ->toJson();
     }
 
-    public function show(Employee $employee)
+    public function show(Employee $employee, Request $request)
     {
-        return $employee->toJson();
+        $company = $request->header('company');
+
+        $query = DB::table('employees')
+            ->where('employees.id', '=', $employee->id)
+            ->where('employees.company', '=', $company)
+            ->select(
+                'employees.*',
+                DB::raw("CASE sex WHEN 1 THEN 'MASC' WHEN 2 THEN 'FEM' END AS sex_name"),
+                DB::raw("CASE civil_state WHEN 1 THEN 'Casado(a)' WHEN 2 THEN 'Solteiro(a)' END AS civil_state_name")
+            )->get();
+
+        return response(
+            array(
+                "data" => $query->toArray()
+            )
+        );
     }
 
     public function store(Request $request)
@@ -29,8 +56,9 @@ class EmployeeController extends Controller
             $errorData = [];
 
             $validatedData = $request->validate(Employee::$fieldsRules);
+            $company = $request->header('company');
 
-            $employee->company = 1;
+            $employee->company = $company;
             $employee->name = $request->name;
             $employee->civil_state = $request->civilstate;
             $employee->position = $request->position;
@@ -67,8 +95,6 @@ class EmployeeController extends Controller
             $errorData = [];
 
             $validatedData = $request->validate(Employee::$fieldsRules);
-
-            $employee->company = 1;
             $employee->name = $request->name;
             $employee->civil_state = $request->civilstate;
             $employee->position = $request->position;

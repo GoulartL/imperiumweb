@@ -5,25 +5,30 @@ namespace App\Http\Controllers\Supplier;
 use App\Supplier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return datatables()
-            ->eloquent(Supplier::query())
-            ->escapeColumns([])
-            ->toJson();
+        $company = $request->header('company');
+        $query = DB::table('suppliers')
+            ->where('suppliers.company', '=', $company)
+            ->select('suppliers.*', DB::raw("CASE WHEN type = 1 THEN  'CNPJ' ELSE 'CPF' END AS type_supplier"));
+
+        return DataTables::of($query)->make(true);
     }
 
     public function selectComponent(Request $request)
     {
         $search = $request->search;
+        $company = $request->header('company');
 
         if ($search == '') {
-            $suppliers = Supplier::orderby('name', 'asc')->select('id', 'name')->paginate(25);
+            $suppliers = Supplier::orderby('name', 'asc')->where('suppliers.company', '=', $company)->select('id', 'name')->paginate(25);
         } else {
-            $suppliers = Supplier::orderby('name', 'asc')->select('id', 'name')->where('name', 'like', '%' . $search . '%')->paginate(25);
+            $suppliers = Supplier::orderby('name', 'asc')->where('suppliers.company', '=', $company)->select('id', 'name')->where('name', 'like', '%' . $search . '%')->paginate(25);
         }
 
         $response = [];
@@ -44,9 +49,20 @@ class SupplierController extends Controller
         );
     }
 
-    public function show(Supplier $supplier)
+    public function show(Supplier $supplier, Request $request)
     {
-        return $supplier->toJson();
+        $company = $request->header('company');
+
+        $query = DB::table('suppliers')
+            ->where('suppliers.id', '=', $supplier->id)
+            ->where('suppliers.company', '=', $company)
+            ->select('suppliers.*', DB::raw("CASE WHEN type = 1 THEN  'CNPJ' ELSE 'CPF' END AS type_supplier"))->get();
+
+        return response(
+            array(
+                "data" => $query->toArray()
+            )
+        );
     }
 
     public function store(Request $request)
@@ -57,8 +73,9 @@ class SupplierController extends Controller
             $errorData = [];
 
             $validatedData = $request->validate(Supplier::$fieldsRules);
+            $company = $request->header('company');
 
-            $supplier->company = 1;
+            $supplier->company = $company;
             $supplier->type = strtoupper($request->type) == "CNPJ" ? 1 : 2;
             $supplier->taxvat = $request->taxvat;
             $supplier->state_register_id = $request->idregister;

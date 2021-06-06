@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
 
 class ProductionDiaryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $company = $request->header('company');
         $query = DB::table('production_diary')
+            ->where('production_diary.company', '=', $company)
             ->join('orders', 'orders.id', '=', 'production_diary.order')
             ->join('customers', 'customers.id', '=', 'orders.customer')
             ->select(
@@ -31,13 +33,18 @@ class ProductionDiaryController extends Controller
         return DataTables::of($query)->make(true);
     }
 
-    public function show(ProductionDiary $production_diary)
+    public function show(ProductionDiary $production_diary, Request $request)
     {
+        $company = $request->header('company');
+
+        $query = DB::table('production_diary')
+            ->where('production_diary.id', '=', $production_diary->id)
+            ->where('production_diary.company', '=', $company)
+            ->select('production_diary.*')->get();
+
         return response(
             array(
-                "data" => array(
-                    $production_diary->toArray()
-                )
+                "data" => $query->toArray()
             )
         );
     }
@@ -45,11 +52,12 @@ class ProductionDiaryController extends Controller
     public function store(Request $request)
     {
         $production_diary = new ProductionDiary();
+        $company = $request->header('company');
         try {
             $error = "";
             $errorData = [];
             $validatedData = $request->validate(ProductionDiary::$fieldsRules);
-            $production_diary->company = 1;
+            $production_diary->company = $company;
             $production_diary->date = is_null($request->date) ? null : \DateTime::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
             $production_diary->employees = $request->employees;
             $production_diary->order = $request->order;
@@ -76,7 +84,6 @@ class ProductionDiaryController extends Controller
             $error = "";
             $errorData = [];
             $validatedData = $request->validate(ProductionDiary::$fieldsRules);
-            $production_diary->company = 1;
             $production_diary->date = is_null($request->date) ? null : \DateTime::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
             $production_diary->employees = $request->employees;
             $production_diary->order = $request->order;

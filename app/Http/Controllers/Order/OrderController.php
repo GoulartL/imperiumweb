@@ -11,19 +11,22 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $company = $request->header('company');
         $query = DB::table('orders')
+            ->where('orders.company', '=', $company)
             ->join('customers', 'customers.id', '=', 'orders.customer')
             ->select('orders.*', 'customers.name as customer_name', DB::raw('orders.qty*orders.price as total'), 'orders.id');
 
         return DataTables::of($query)->make(true);
     }
 
-    public function show(Order $order)
+    public function show(Order $order, Request $request)
     {
-
+        $company = $request->header('company');
         $query = DB::table('orders')
+            ->where('orders.company', '=', $company)
             ->join('customers', 'customers.id', '=', 'orders.customer')
             ->select('orders.*', 'customers.name as customer_name', DB::raw('orders.qty*orders.price as total'), 'orders.id')
             ->where('orders.id', '=', $order->id)->get();
@@ -38,11 +41,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = new Order();
+        $company = $request->header('company');
         try {
             $error = "";
             $errorData = [];
             $validatedData = $request->validate(Order::$fieldsRules);
-            $order->company = 1;
+            $order->company = $company;
             $order->code = $request->code;
             $order->customer = $request->customer;
             $order->incoming_invoice = $request->incoming_invoice;
@@ -132,13 +136,16 @@ class OrderController extends Controller
     public function selectComponent(Request $request)
     {
         $search = $request->search;
+        $company = $request->header('company');
 
         if ($search == '') {
             $orders = Order::orderby('code', 'asc')
+                ->where('orders.company', '=', $company)
                 ->join('customers', 'customers.id', '=', 'orders.customer')
                 ->select('orders.id', 'code', 'customers.name as customer_name')->paginate(25);
         } else {
             $orders = Order::orderby('code', 'asc')
+                ->where('orders.company', '=', $company)
                 ->join('customers', 'customers.id', '=', 'orders.customer')
                 ->select('orders.id', 'code', 'customers.name as customer_name')
                 ->where('code', 'like', '%' . $search . '%')->paginate(25);

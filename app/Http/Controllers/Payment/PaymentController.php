@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
+        $company = $request->header('company');
         $query = DB::table('payments')
+            ->where('payments.company', '=', $company)
             ->join('customers', 'customers.id', '=', 'payments.client')
             ->join('species', 'species.id', '=', 'payments.species')
             ->select('payments.*', 'customers.name as customer_name', 'species.name as specie_name', 'payments.id');
@@ -21,13 +22,18 @@ class PaymentController extends Controller
         return DataTables::of($query)->make(true);
     }
 
-    public function show(Payment $payment)
+    public function show(Payment $payment, Request $request)
     {
+        $company = $request->header('company');
+
+        $query = DB::table('payments')
+            ->where('payments.id', '=', $payment->id)
+            ->where('payments.company', '=', $company)
+            ->select('payments.*')->get();
+
         return response(
             array(
-                "data" => array(
-                    $payment->toArray()
-                )
+                "data" => $query->toArray()
             )
         );
     }
@@ -40,6 +46,8 @@ class PaymentController extends Controller
         try {
             $error = "";
             $errorData = [];
+
+            $company = $request->header('company');
 
             // $request->validate(Payment::$fieldsRulesNew);
 
@@ -68,7 +76,7 @@ class PaymentController extends Controller
                 try {
                     $valuePay = floatval(str_replace(',', '.', str_replace('.', '', $value[1])));
                     $payment = new Payment();
-                    $payment->company = 1;
+                    $payment->company = $company;
                     $payment->emission = \DateTime::createFromFormat('d/m/Y', $tempPayment['emission'])->format('Y-m-d');
                     $payment->description = $tempPayment['description'];
                     $payment->client = $tempPayment['client'];

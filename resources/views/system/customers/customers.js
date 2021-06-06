@@ -6,7 +6,7 @@ $(document).ready(function() {
         ajax: "/api/clientes",
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'type', name: 'type' },
+            { data: 'type_customer', name: 'type' },
             { data: 'taxvat', name: 'taxvat' },
             { data: 'state_register_id', name: 'state_register_id' },
             { data: 'name', name: 'name' },

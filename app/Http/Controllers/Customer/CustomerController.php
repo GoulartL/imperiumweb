@@ -6,9 +6,7 @@ namespace App\Http\Controllers\Customer;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -17,27 +15,41 @@ class CustomerController extends Controller
         $company = $request->header('company');
 
         return datatables()
-            ->eloquent(
-                Customer::where('company', $company)
+            ->query(
+                DB::table('customers')
+                    ->where('customers.company', '=', $company)
+                    ->select('customers.*', DB::raw("CASE WHEN type = 1 THEN  'CNPJ' ELSE 'CPF' END AS type_customer"))
                     ->orderBy('name')
             )
             ->escapeColumns([])
             ->toJson();
     }
 
-    public function show(Customer $customer)
+    public function show(Customer $customer, Request $request)
     {
-        return $customer->toJson();
+        $company = $request->header('company');
+
+        $query = DB::table('customers')
+            ->where('customers.id', '=', $customer->id)
+            ->where('customers.company', '=', $company)
+            ->select('customers.*', DB::raw("CASE WHEN type = 1 THEN  'CNPJ' ELSE 'CPF' END AS type_customer"))->get();
+
+        return response(
+            array(
+                "data" => $query->toArray()
+            )
+        );
     }
 
     public function selectComponent(Request $request)
     {
         $search = $request->search;
+        $company = $request->header('company');
 
         if ($search == '') {
-            $customers = Customer::orderby('name', 'asc')->select('id', 'name')->paginate(25);
+            $customers = Customer::orderby('name', 'asc')->where('customers.company', '=', $company)->select('id', 'name')->paginate(25);
         } else {
-            $customers = Customer::orderby('name', 'asc')->select('id', 'name')->where('name', 'like', '%' . $search . '%')->paginate(25);
+            $customers = Customer::orderby('name', 'asc')->where('customers.company', '=', $company)->select('id', 'name')->where('name', 'like', '%' . $search . '%')->paginate(25);
         }
 
         $response = [];
@@ -66,8 +78,9 @@ class CustomerController extends Controller
             $errorData = [];
 
             $validatedData = $request->validate(Customer::$fieldsRules);
+            $company = $request->header('company');
 
-            $customer->company = 1;
+            $customer->company = $company;
             $customer->type = strtoupper($request->type) == "CNPJ" ? 1 : 2;
             $customer->taxvat = $request->taxvat;
             $customer->state_register_id = $request->idregister;

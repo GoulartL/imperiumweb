@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 
 class ReceivementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
+        $company = $request->header('company');
         $query = DB::table('receipts')
+            ->where('receipts.company', '=', $company)
             ->join('customers', 'customers.id', '=', 'receipts.client')
             ->join('species', 'species.id', '=', 'receipts.species')
             ->select('receipts.*', 'customers.name as customer_name', 'species.name as specie_name', 'receipts.id');
@@ -21,13 +22,18 @@ class ReceivementController extends Controller
         return DataTables::of($query)->make(true);
     }
 
-    public function show(Receivement $receivement)
+    public function show(Receivement $receivement, Request $request)
     {
+        $company = $request->header('company');
+
+        $query = DB::table('receipts')
+            ->where('receipts.id', '=', $receivement->id)
+            ->where('receipts.company', '=', $company)
+            ->select('receipts.*')->get();
+
         return response(
             array(
-                "data" => array(
-                    $receivement->toArray()
-                )
+                "data" => $query->toArray()
             )
         );
     }
@@ -40,6 +46,7 @@ class ReceivementController extends Controller
         try {
             $error = "";
             $errorData = [];
+            $company = $request->header('company');
 
             // $request->validate(Receivement::$fieldsRulesNew);
 
@@ -68,7 +75,7 @@ class ReceivementController extends Controller
                 try {
                     $valueRec = floatval(str_replace(',', '.', str_replace('.', '', $value[1])));
                     $receivement = new Receivement();
-                    $receivement->company = 1;
+                    $receivement->company = $company;
                     $receivement->emission = \DateTime::createFromFormat('d/m/Y', $tempReceivement['emission'])->format('Y-m-d');
                     $receivement->description = $tempReceivement['description'];
                     $receivement->client = $tempReceivement['client'];
