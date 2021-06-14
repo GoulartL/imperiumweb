@@ -119,7 +119,7 @@ class PaymentController extends Controller
                 $payment->value = $request->value;
                 $payment->species = $request->species;
             }else {
-                $payment->payment_date = \DateTime::createFromFormat('d/m/Y', $request->payment_date)->format('Y-m-d');
+                $payment->payment_date = is_null($request->payment_date) ? null : \DateTime::createFromFormat('d/m/Y', $request->payment_date)->format('Y-m-d');
                 $payment->payment_value = $request->payment_value;
             }
 

@@ -15,17 +15,10 @@ $(document).ready(function() {
                 datasets: [{
                     label: 'Produzido',
                     data: historicomes.data,
-                    borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: '#5e4cd3',
+                    backgroundColor: '#5e4cd3'
                 }]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
         });
     });
 

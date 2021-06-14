@@ -34,8 +34,7 @@
         <form method="post" action="{{ route('system.auth') }}">
             @csrf
             <div class="text-center mb-4">
-                <img src="{{ asset('assets/images/WEB_IMPERIUM.svg') }}" alt="triangle with all three sides equal"
-                    width="200" />
+                <img src="{{ asset('assets/images/WEB_IMPERIUM.png') }}" />
             </div>
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="E-mail" name="email">

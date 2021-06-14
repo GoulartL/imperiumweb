@@ -62,3 +62,7 @@ Route::delete('diario_de_producao/remover/{production_diary}', 'ProductionDiary\
 Route::get('especies/select', 'SpecieController@selectComponent')->name('species.select2');
 
 Route::get('dashboard/producao/historicomes', 'Dashboard\\ProductionController@HistoryMonth')->name('dashboard.production.history_month');
+Route::get('dashboard/financeiro/historicomes', 'Dashboard\\CashFlowController@HistoryMonth')->name('dashboard.financial.cash_flow.history_month');
+Route::get('dashboard/financeiro/historicodia', 'Dashboard\\CashFlowController@HistoryDay')->name('dashboard.financial.cash_flow.history_day');
+Route::get('dashboard/financeiro/pagarnodia', 'Dashboard\\CashFlowController@PayOnTheDay')->name('dashboard.financial.cash_flow.pay_day');
+Route::get('dashboard/financeiro/recebernodia', 'Dashboard\\CashFlowController@ReceiveOnTheDay')->name('dashboard.financial.cash_flow.receive_day');

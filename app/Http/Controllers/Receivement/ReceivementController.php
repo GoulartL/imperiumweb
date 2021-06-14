@@ -117,7 +117,7 @@ class ReceivementController extends Controller
                 $receivement->value = $request->value;
                 $receivement->species = $request->species;
             }else {
-                $receivement->receipt_date = \DateTime::createFromFormat('d/m/Y', $request->receipt_date)->format('Y-m-d');
+                $receivement->receipt_date = is_null($request->receipt_date) ? null : \DateTime::createFromFormat('d/m/Y', $request->receipt_date)->format('Y-m-d');
                 $receivement->receipt_value = $request->receipt_value;
             }
 

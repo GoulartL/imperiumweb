@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('system.home');
-})->name('system.home')->middleware('auth');
-
 Route::get('/login', 'User\\UserController@login')->name('system.login');
 Route::post('/login', 'User\\UserController@auth')->name('system.auth');
 
@@ -40,10 +36,6 @@ Route::get('/pagamentos', function () {
     return view('system.financial.payments.payments');
 })->name('system.payments')->middleware('auth');
 
-Route::get('/fluxo-de-caixa', function () {
-    return view('system.financial.cash-flow.cash-flow');
-})->name('system.cashFlow')->middleware('auth');
-
 Route::get('/pedidos', function () {
     return view('system.production.orders.orders');
 })->name('system.orders')->middleware('auth');
@@ -53,3 +45,5 @@ Route::get('/diario_de_producao', function () {
 })->name('system.production_diary')->middleware('auth');
 
 Route::get('/producao/dashboard', 'Dashboard\\ProductionController@show')->name('system.dashboard.production')->middleware('auth');
+Route::get('/fluxo-de-caixa', 'Dashboard\\CashFlowController@show')->name('system.cashFlow')->middleware('auth');
+Route::get('/', 'Dashboard\\HomeController@show')->name('system.home')->middleware('auth');

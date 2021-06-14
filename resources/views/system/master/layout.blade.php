@@ -38,8 +38,8 @@
                     </ul>
                     <div class="navbar-header">
                         <a class="navbar-brand ml-0 ml-md-2" href="/">
-                            <img src="{{ asset('assets/images/WEB_IMPERIUM.svg') }}" width="100" class="dark-logo" />
-                            <img src="{{ asset('assets/images/WEB_IMPERIUM.svg') }}" width="100" class="light-logo" />
+                            <img src="{{ asset('assets/images/WEB_IMPERIUM.png') }}" width="100" class="dark-logo" />
+                            <img src="{{ asset('assets/images/WEB_IMPERIUM.png') }}" width="100" class="light-logo" />
                         </a>
                     </div>
                     <ul class="navbar-nav my-lg-0 ml-auto">
@@ -56,7 +56,7 @@
 
         <aside class="left-sidebar">
             <div class="d-flex no-block nav-text-box align-items-center">
-                <img src="{{ asset('assets/images/WEB_IMPERIUM_DARK.svg') }}" width="100" />
+                <img src="{{ asset('assets/images/WEB_IMPERIUM_DARK.png') }}" width="100" />
                 <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i
                         class="fas fa-bars"></i></a>
                 <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i

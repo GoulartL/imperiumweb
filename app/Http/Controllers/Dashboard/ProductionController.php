@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductionController extends Controller
 {
@@ -12,8 +13,15 @@ class ProductionController extends Controller
     public function show(Request $request)
     {
 
-        $company = $request->header('company');
+        $company = Auth::user()->company;
 
+        $tableMonth = $this->tableMonth($company);
+
+        return view('system.production.dashboard.dashboard', $tableMonth);
+    }
+
+    public function tableMonth(string $company)
+    {
         $sectors = [
             '1' => [
                 "name" => 'PCP',
@@ -90,10 +98,10 @@ class ProductionController extends Controller
             $sectors[$value->sector]['total_all'] = $value->total / $value->total_all;
         }
 
-        return view('system.production.dashboard.dashboard', [
+        return [
             "sectors" => $sectors,
             "indicators" => $indicators
-        ]);
+        ];
     }
 
     public function HistoryMonth(Request $request)
@@ -117,6 +125,6 @@ class ProductionController extends Controller
                 "label" => array_column($history, "date"),
                 "data" => array_column($history, "total")
             )
-        ); 
+        );
     }
 }

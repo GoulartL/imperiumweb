@@ -72,5 +72,7 @@ mix
     .js('resources/views/system/financial/receipts/receipts.js', 'public/assets/views/financial/receipts/receipts.js')
     .js('resources/views/system/financial/payments/payments.js', 'public/assets/views/financial/payments/payments.js')
     .js('resources/views/system/production/dashboard/dashboard.js', 'public/assets/views/production/dashboard/dashboard.js')
+    .js('resources/views/system/financial/cash-flow/cash-flow.js', 'public/assets/views/financial/cash-flow/cash-flow.js')
     .js('resources/views/system/production/orders/orders.js', 'public/assets/views/production/orders/orders.js')
+    .js('resources/views/system/home/home.js', 'public/assets/views/home/home.js')
     .js('resources/views/system/production/production-diary/production_diary.js', 'public/assets/views/production/production-diary/production_diary.js');
